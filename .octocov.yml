@@ -4,10 +4,10 @@ coverage:
     - todo-api/coverage.out
 codeToTestRatio:
   code:
-    - '**/*.go'
-    - '!**/*_test.go'
+    - 'todo-api/**/*.go'
+    - '!todo-api/**/*_test.go'
   test:
-    - '**/*_test.go'
+    - 'todo-api/**/*_test.go'
 testExecutionTime:
   if: true
 diff:
