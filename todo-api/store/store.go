@@ -1,6 +1,8 @@
 package store
 
-import "github.com/techarm/todo-api/entity"
+import (
+	"github.com/techarm/todo-api/entity"
+)
 
 var (
 	Tasks = &TaskStore{Tasks: map[entity.TaskID]*entity.Task{}}
