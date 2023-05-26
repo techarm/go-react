@@ -1,11 +1,14 @@
 package store
 
 import (
+	"errors"
+
 	"github.com/techarm/todo-api/entity"
 )
 
 var (
-	Tasks = &TaskStore{Tasks: map[entity.TaskID]*entity.Task{}}
+	Tasks       = &TaskStore{Tasks: map[entity.TaskID]*entity.Task{}}
+	ErrNotFound = errors.New("not found")
 )
 
 type TaskStore struct {
