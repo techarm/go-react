@@ -1,15 +1,20 @@
 package main
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-playground/validator"
+	"github.com/techarm/todo-api/auth"
+	"github.com/techarm/todo-api/clock"
+	"github.com/techarm/todo-api/config"
 	"github.com/techarm/todo-api/handler"
+	"github.com/techarm/todo-api/service"
 	"github.com/techarm/todo-api/store"
 )
 
-func NewMux() http.Handler {
+func NewMux(ctx context.Context, cfg *config.Config) (http.Handler, func(), error) {
 	mux := chi.NewRouter()
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -17,11 +22,65 @@ func NewMux() http.Handler {
 	})
 	v := validator.New()
 
-	at := &handler.AddTask{Store: store.Tasks, Validator: v}
-	mux.Post("/tasks", at.ServeHTTP)
+	db, cleanup, err := store.New(ctx, cfg)
+	if err != nil {
+		return nil, cleanup, err
+	}
 
-	lt := &handler.ListTask{Store: store.Tasks}
-	mux.Get("/tasks", lt.ServeHTTP)
+	clocker := clock.RealClocker{}
+	r := store.Repository{Clocker: clocker}
 
-	return mux
+	rcli, err := store.NewKVS(ctx, cfg)
+	if err != nil {
+		return nil, cleanup, err
+	}
+
+	jwter, err := auth.NewJWTer(rcli, clocker)
+	if err != nil {
+		return nil, cleanup, err
+	}
+
+	// ユーザー作成
+	ru := &handler.RegisterUser{
+		Service:   &service.RegisterUser{DB: db, Repo: &r},
+		Validator: v,
+	}
+	mux.Post("/register", ru.ServeHTTP)
+	l := &handler.Login{
+		Service: &service.Login{
+			DB:             db,
+			Repo:           &r,
+			TokenGenerator: jwter,
+		},
+		Validator: v,
+	}
+
+	// ログイン
+	mux.Post("/login", l.ServeHTTP)
+	at := &handler.AddTask{
+		Service:   &service.AddTask{DB: db, Repo: &r},
+		Validator: v,
+	}
+
+	lt := &handler.ListTask{
+		Service: &service.ListTask{DB: db, Repo: &r},
+	}
+
+	// タスク
+	mux.Route("/tasks", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter))
+		r.Post("/", at.ServeHTTP)
+		r.Get("/", lt.ServeHTTP)
+	})
+
+	// 管理
+	mux.Route("/admin", func(r chi.Router) {
+		r.Use(handler.AuthMiddleware(jwter), handler.AdminMiddleware)
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "application/json; charset=utf-8")
+			_, _ = w.Write([]byte(`{"message": "admin only"}`))
+		})
+	})
+
+	return mux, cleanup, nil
 }
