@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "c9e51a8b-5d95-4435-a1a7-d431fbed3878",
+		"name": "Go-react",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ユーザー登録",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"user\",\n    \"password\": \"userpassword\",\n    \"role\": \"user\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/register",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ログイン",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"user\",\n    \"password\": \"userpassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/login",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "タスク登録",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODUxNDg4MjcsImlhdCI6MTY4NTE0NzAyNywiaXNzIjoiZ2l0aHViLmNvbS90ZWNoYXJtL2dvLXJlYWN0IiwianRpIjoiZGFlMzBkNmItMWYyYy00ZWQ3LWIyMGEtZDIwZTAzMTU1MzhlIiwicm9sZSI6ImFkbWluIiwic3ViIjoiYWNjZXNzX3Rva2VuIiwidXNlcl9uYW1lIjoiYWRtaW5fdXNlciJ9.yQWf_471orfv-0DQeNmedHUwRk0p4_8vnc-sJXszB5u5uulVOC5YNGxECQRgnab3cKVvWm7sRzeLwZYJAgxX8FOG0RwzBmRvR7xPFPgHMhjosuHz0GBwwVrTxEXg6V7jLxNEpDHhG8SH7APUQJo9Dq7Zj_1FZq4aozdhRpX9QQHt5mMuZxZjxUaib4fJKf37wc3mp3-E2WhaNJPp1HXA7GM1--Ws_c3UAijolT7ytr_DmhgP3BN0_D7uqSKbTI4K0se6njOnsNMmGtL4vMaCD9z5AzSnNq5XvAH0E8LqPb7SwlVvANKaShyE1PAE2YK2FyLNBkxBiabywYNxwfJWPefd-TQdOltYDSg-My9c5qXhAJ8H1yMJijfZzdMGGXJrRz9lvisasua1B6y7Kbe9sRGY5Qw2gu3XJjK8TDYn41UDDblJaaB9a_58ePMwixkqFQO6u1Zg_mDkDk5fa_YIsZ2R7q7ZS7i1vN40IZcK_Yza4XDtm-5KWkN4Yt_IELw0Qc5br5lOJzgP2Nli3T6K9GXwXmQ41dDOB0aiUlgFsGD4xbj9bO-iUIZd0vAkbx4o5wmeFLYlZQt249dx-pfV73FaaiHPSyIHt7cxTZwDMLVjM9_K6MpJ04Am4-i9rc3mZDt5FV6AP5UVCFA0ZH9wBQ28KAibPyZ9bGZjDV3TTuU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"my first task\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/tasks",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "タスク一覧取得",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODUxNDkwNzEsImlhdCI6MTY4NTE0NzI3MSwiaXNzIjoiZ2l0aHViLmNvbS90ZWNoYXJtL2dvLXJlYWN0IiwianRpIjoiODViNTdiYzgtOTFkZS00NzU1LWJhNDEtNDU0MzE0NjgxNGUwIiwicm9sZSI6InVzZXIiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJ1c2VyX25hbWUiOiJ1c2VyIn0.52XV1cHDllWu6545s1QExfK2mnE8Oo66vaswjaiSFGyyY9XjlUHgBzE-5RQtM3w_9ROJHsgKQSXp_f4oq4NuxDU52tziGOPMyH6vHnCBleEMPMVLapINs9R82dRgtoXYaUcLFKjtDrzRJuLLHj4XvW4vZhOkSyWBDV7fWLNDKKaAUI0PjvIJaWimZhRG4CHwZ0iaDJpV1lLUG_tQKTQJOxA6MKNzaPiQdxS5fxDDy9IRpRKOKfCkloh1SRA4if_JvD29kvxtI9x2XaS7J71uxkDT5to9-pqZZLWim-u3JB5xA1NooxAjTYxVTmyxat_S3qNjMhx_HoFTr6W1kKWS_jPc13pvKCy9PkXSazKr8RfBsRvMha8Fst9M6SKYe5Vr4oOQQ7S7M2bVIgvxrwZL5azsVNQOO2ZHhQ1gF9vIiF_sgupQrPnQEUkTEUxb-KCypABvwLEbOujar1GYqetHE-X4yf8t0h31ef_GRrwBow2rIWEHsDE916tXrhm8h5lL7BqDM4oOx7o2dXp0FieKWcDwAcl58Ce5Uj8Pa-hjIgLcM_gqWaJhz3t8NxceuOUaLwDEmnvzLR4SUhIPqs3kAZzarQbr55Q00-QntD2q_R7VO1O2xLJdBphspag12wn0TSRSJzdN-a8emk6XjBVVCOju8JBB_W9NHTjmeAvueTI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"admin_user\",\n    \"password\": \"mypassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/tasks",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin管理",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2ODUxNDkwNzEsImlhdCI6MTY4NTE0NzI3MSwiaXNzIjoiZ2l0aHViLmNvbS90ZWNoYXJtL2dvLXJlYWN0IiwianRpIjoiODViNTdiYzgtOTFkZS00NzU1LWJhNDEtNDU0MzE0NjgxNGUwIiwicm9sZSI6InVzZXIiLCJzdWIiOiJhY2Nlc3NfdG9rZW4iLCJ1c2VyX25hbWUiOiJ1c2VyIn0.52XV1cHDllWu6545s1QExfK2mnE8Oo66vaswjaiSFGyyY9XjlUHgBzE-5RQtM3w_9ROJHsgKQSXp_f4oq4NuxDU52tziGOPMyH6vHnCBleEMPMVLapINs9R82dRgtoXYaUcLFKjtDrzRJuLLHj4XvW4vZhOkSyWBDV7fWLNDKKaAUI0PjvIJaWimZhRG4CHwZ0iaDJpV1lLUG_tQKTQJOxA6MKNzaPiQdxS5fxDDy9IRpRKOKfCkloh1SRA4if_JvD29kvxtI9x2XaS7J71uxkDT5to9-pqZZLWim-u3JB5xA1NooxAjTYxVTmyxat_S3qNjMhx_HoFTr6W1kKWS_jPc13pvKCy9PkXSazKr8RfBsRvMha8Fst9M6SKYe5Vr4oOQQ7S7M2bVIgvxrwZL5azsVNQOO2ZHhQ1gF9vIiF_sgupQrPnQEUkTEUxb-KCypABvwLEbOujar1GYqetHE-X4yf8t0h31ef_GRrwBow2rIWEHsDE916tXrhm8h5lL7BqDM4oOx7o2dXp0FieKWcDwAcl58Ce5Uj8Pa-hjIgLcM_gqWaJhz3t8NxceuOUaLwDEmnvzLR4SUhIPqs3kAZzarQbr55Q00-QntD2q_R7VO1O2xLJdBphspag12wn0TSRSJzdN-a8emk6XjBVVCOju8JBB_W9NHTjmeAvueTI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user_name\": \"admin_user\",\n    \"password\": \"mypassword\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api_url}}/admin",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"admin"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_url",
+			"value": "http://localhost:18080",
+			"type": "default"
+		}
+	]
+}
